@@ -20,7 +20,7 @@ var serialport = require("serialport"),		// include the serialport library
 	SerialPort  = serialport.SerialPort,	   // make a local instance of serial
 	express = require('express'),				   // make an instance of express
 	open = require('open'),                   // used to open the browser
-	url = 'http://localhost:8080';            // URL to open in the browser
+	url = 'http://latexpixel.herokuapp.com/';            // URL to open in the browser
 	
 var app = express(),								   // start Express framework
    server = require('http').createServer(app);		// start an HTTP server
@@ -40,7 +40,7 @@ console.log("opening serial port: " + portName);
 server.listen(8080);								         
 console.log("Listening for new clients on port 8080");
 // open the app in a browser:
-open(url);                   
+// open(url);                   
 
 // open the serial port. Uses the command line parameter:
 var myPort = new SerialPort(portName, { 
