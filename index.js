@@ -30,8 +30,8 @@ app.use('/js', express.static(__dirname + '/js'));
  
 // third word of the command line is serial port name:
 console.log('hello', process.argv);
-// var portName = process.argv[2];	
-var portName = "/dev/tty.usbmodem1431";
+var portName = process.argv[2];	
+// var portName = "/dev/tty.usbmodem1431";
 
 // print out the port you're listening on:
 console.log("opening serial port: " + portName);	
