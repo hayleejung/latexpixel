@@ -1,12 +1,12 @@
 {
-  "name": "restToSerial",
-  "version": "0.4.0",
+  "name": "LatexPixel",
   "description" : "A browser-to-serial application using RESTful URL calls",
   "keywords": "serial, node-serialport",
   "author": {
-  	"name":"Tom Igoe"
+  	"name":"Haylee Jung"
    },
   "dependencies": {
+    "ws": "0.4.x",
     "serialport": "1.1.x",
     "express": "3.x", 
     "open": ">=0.0.4"
