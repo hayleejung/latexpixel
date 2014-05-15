@@ -3,8 +3,7 @@ var serialport = require("serialport"),		// include the serialport library
 	express = require('express'),				   // make an instance of express
 	open = require('open'),                   // used to open the browser
 	url = 'http://localhost:8080',            // URL to open in the browser
-	// WebSocketServer = require('ws').Server,
-	// http = require('http');
+	WebSocketServer = require('ws').Server;
 	
 var app = express(),								   // start Express framework
    server = require('http').createServer(app);		// start an HTTP server
@@ -38,6 +37,24 @@ var myPort = new SerialPort(portName, {
    They only get called when the server gets incoming GET requests:
 */
 
+// socket
+
+var wss = new WebSocketServer({server: server});
+console.log('websocket server created');
+wss.on('connection', function(ws) {
+  // var id = setInterval(function() {
+  //   ws.send(JSON.stringify(new Date()), function() {  });
+  // }, 1000);
+
+  console.log('websocket connection open');
+
+  ws.on('close', function() {
+    console.log('websocket connection close');
+    // clearInterval(id);
+  });
+});
+
+
 // respond to web GET requests with the index.html page:
 app.get('/', function (request, response) {
   response.sendfile(__dirname + '/index.html');
@@ -57,3 +74,5 @@ app.get('/output/*', function (request, response) {
   // send the data and close the connection:
   response.end(latexCommand);
 });
+
+
