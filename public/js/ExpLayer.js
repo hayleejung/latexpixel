@@ -1,12 +1,14 @@
 function ExpLayer() {
   //=========== in-class variables ===========
   this.drawRise = true;
-  this.drawFail = false;
+  this.drawFall = false;
   this.drawPulse = false;
+  //this.drawRipple = false;
 
   this.rs = new Rise();
-  this.fl = new Fail();
+  this.fl = new Fall();
   this.pl = new Pulse();
+  //this.rp = new Ripple();
 }
 
 ExpLayer.prototype = {
@@ -14,7 +16,8 @@ ExpLayer.prototype = {
   loop : function() {
       this.pl.pulseIt();
       this.rs.riseIt();
-      this.fl.failIt();
+      this.fl.fallIt();
+     // this.rp.rippleIt();
   },
 
   //=========== expressHandler() ===========
@@ -44,7 +47,7 @@ ExpLayer.prototype = {
     */
 
     //-------- start fail --------
-    if (this.drawFail) {
+    if (this.drawFall) {
       this.fl.addList(_id);
     }
 
@@ -54,60 +57,47 @@ ExpLayer.prototype = {
       this.fl.removeList(_id);
     }
     */
-  },
 
-  /*
-  //=========== keyHandler() ===========
-  keyHandler : function(_key, _id) {    
-    //-------- start pulse --------
-    if (_key == 'P') {
-      this.pl.addList(_id);
-    }
+    //-------- start ripple --------
+    //if (this.drawRipple) {
+    //  this.rp.addList(_id);
+    //}
 
-    //-------- stop pulse --------
-    if (_key == 'O') {
-      this.pl.removeList(_id);
-    }
-
-    //-------- start rise --------
-    if (_key == 'R') {
-      this.rs.addList(_id);
-    }
-
-    //-------- stop rise --------
-    if (_key == 'T') {
-      this.rs.removeList(_id);
-    }
-
-    //-------- start fail --------
-    if (_key == 'F') {
-      this.fl.addList(_id);
-    }
-
-    //-------- stop fail --------
+    /*
+    //-------- stop ripple --------
     if (_key == 'G') {
-      this.fl.removeList(_id);
+      this.rp.removeList(_id);
     }
+    */
   },
-  */
+
 
   //=========== changeDrawType() ===========
   changeDrawType : function(_value) {
     if (_value == "Rise"){
       this.drawRise = true;
-      this.drawFail = false;
+      this.drawFall = false;
       this.drawPulse = false;
+      this.drawRipple = false;
       console.log("Rise On");
-    } else if (_value == "Fail") {
+    } else if (_value == "Fall") {
       this.drawRise = false;
-      this.drawFail = true;
+      this.drawFall = true;
       this.drawPulse = false;
+      this.drawRipple = false;
       console.log("Fail On");
     } else if (_value == "Pulse") {
       this.drawRise = false;
-      this.drawFail = false;
+      this.drawFall = false;
       this.drawPulse = true;
+      this.drawRipple = false;
       console.log("Pulse On");
+    } else if (_value == "Ripple") {
+      this.drawRise = false;
+      this.drawFall = false;
+      this.drawPulse = false;
+      this.drawRipple = true;
+      console.log("Ripple On");
     }
   },
 
@@ -116,5 +106,6 @@ ExpLayer.prototype = {
     this.pl.updateClock();
     this.rs.updateClock();
     this.fl.updateClock();
+    //this.rp.updateClock();
   }
 }

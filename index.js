@@ -37,23 +37,46 @@ var myPort = new SerialPort(portName, {
    They only get called when the server gets incoming GET requests:
 */
 
-// socket
+// ================= socket ===================
+
+// module data variables
+var moduleData = Array(38);
+for(var i = 1; i < 38; i++) {
+  moduleData[i] = { rise: false, fall: false, pulse: false, ripple: false };
+}
+
 
 var wss = new WebSocketServer({server: server});
 console.log('websocket server created');
 wss.on('connection', function(ws) {
-  // var id = setInterval(function() {
-  //   ws.send(JSON.stringify(new Date()), function() {  });
-  // }, 1000);
-
   console.log('websocket connection open');
 
-  ws.on('close', function() {
-    console.log('websocket connection close');
-    // clearInterval(id);
+  // Send data when connedted
+  ws.send(JSON.stringify(moduleData));
+
+  // data format: { id: n, mode: string, value: true/false }
+  ws.on('message', function(data) {
+    data = JSON.parse(data);
+    // console.log(data);
+
+    // update data
+    moduleData[data['id']] = { rise: false, fall: false, pulse: false, ripple: false };
+    moduleData[data['id']][data['mode']] = data['value'];
+
+    // console.log(moduleData);
+
+    // broadcast
+    wss.broadcast(data);
+    // wss.broadcast(moduleData);
   });
 });
 
+// Broadcasting function
+wss.broadcast = function(data) {
+  for(var i in this.clients) {
+    this.clients[i].send(JSON.stringify(data));
+  }
+};
 
 // respond to web GET requests with the index.html page:
 app.get('/', function (request, response) {

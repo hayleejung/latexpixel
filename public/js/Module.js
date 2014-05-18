@@ -15,6 +15,11 @@ function Module(_polyN, _r, _lx, _ly, _id) {
 
   this.servoAngle = this.servoMax/2;
   this.h = 0, this.s = 255, this.v = 255;  //color
+
+  this.riseOn = false;
+  this.fallOn = false;
+  this.pulseOn = false;
+  this.rippleOn = false;
 }
 
 Module.prototype = {

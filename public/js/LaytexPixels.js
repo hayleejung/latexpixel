@@ -66,16 +66,7 @@ function setup() {
 //=========== draw() ===========
 function draw() {
   background(230);
-  /*
-  textSize(20);
-  fill(0);
-  text("Press P: Pulse it  /  Press O: Stop Pulsing", 20, height-90);
-  text("Press R: Rise it  /  Press T: Stop Rising", 20, height-60);
-  text("Press F: Fail it  /  Press G: Stop Failing", 20, height-30);
-  */
   textSize(12);
-
-
 
   eManager.loop();
 
@@ -100,25 +91,30 @@ function express() {
       }
     }
 
-
   var checked = [];
-  checked.push(document.getElementById('radio-choice-1').checked);
-  checked.push(document.getElementById('radio-choice-2').checked);
-  checked.push(document.getElementById('radio-choice-3').checked);
-  checked.push(document.getElementById('radio-choice-4').checked);
+    checked.push(document.getElementById('radio-choice-1').checked);
+    checked.push(document.getElementById('radio-choice-2').checked);
+    checked.push(document.getElementById('radio-choice-3').checked);
+    checked.push(document.getElementById('radio-choice-4').checked);
 
   for(var i = 0; i < checked.length; i++) {
     if(checked[i] === true) {
       if(id === 0){
-        console.log("selected pixel : "+ id + ", status : " + i);
+        console.log( id + "/" + i);
       }else{
-        $.get("/output/" + id + "/" + i);
-        console.log("selected pixel : "+ id + ", status : " + i);
+        if(i===0) $.get("/output/" + id + "A");
+        else if(i===1) $.get("/output/" + id + "C");
+        else if(i===2) $.get("/output/" + id + "E");
+        else if(i===3) $.get("/output/" + id + "G");
+
+        // send data to server
+        sendmessage({id: id, mode: ['Rise', 'Fall', 'Pulse', 'Ripple'][i], value: true});
       }
     }
   }
 
-  eManager.expressHandler(id);
+  // console.log(id);
+  // eManager.expressHandler(id); // <- after receiving data from server
   //eManager.keyHandler(key, id);
 
 }
